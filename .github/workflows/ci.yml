@@ -58,12 +58,10 @@ jobs:
         id: meta
         uses: docker/metadata-action@v5
         with:
-          images: ghcr.io/${{ github.repository }}/webapp
+          images: ghcr.io/${{ github.repository_owner | downcase }}/${{ github.event.repository.name | downcase }}/webapp
           tags: |
-            type=raw,value=latest,enable=${{ github.ref == 'refs/heads/main' }}
-            type=sha,enable=${{ github.ref == 'refs/heads/main' }}
-            type=raw,value=stable,enable=${{ startsWith(github.ref, 'refs/tags/') }}
-            type=ref,event=tag
+            type=raw,value=latest
+            type=sha,format=long
             
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
