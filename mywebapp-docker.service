@@ -1,0 +1,15 @@
+[Unit]
+Description=MyWebApp Container
+After=docker.service
+Requires=docker.service
+
+[Service]
+WorkingDirectory=/opt/mywebapp
+# Start: піднімаємо компоуз
+ExecStart=/usr/bin/docker compose up
+# Stop: зупиняємо компоуз
+ExecStop=/usr/bin/docker compose down
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

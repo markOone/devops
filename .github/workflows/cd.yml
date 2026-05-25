@@ -1,0 +1,22 @@
+name: CD Pipeline
+
+on:
+  push:
+    tags:
+      - '*'
+
+jobs:
+  deploy:
+    runs-on: self-hosted
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Deploy via SSH
+        run: |
+          ssh -o StrictHostKeyChecking=no student@192.168.8.216 'bash -s' < ./deploy.sh
+
+      - name: Verify Deployment
+        run: |
+          # Перевірка: чи відповідає сервер
+          curl --fail http://192.168.8.216/health/alive || exit 1
