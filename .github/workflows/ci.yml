@@ -2,8 +2,7 @@ name: CI Pipeline
 
 on:
   push:
-    branches: [ "main" ]
-    tags: [ '*' ]
+    branches: [ "main", "lab3" ]
   pull_request:
     branches: [ "main" ]
 
