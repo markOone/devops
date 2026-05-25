@@ -3,11 +3,12 @@ import json
 
 CONFIG_PATH = '/etc/mywebapp/config.json'
 
+
 def migrate():
     try:
         with open(CONFIG_PATH, 'r') as f:
             config = json.load(f)
-            
+
         conn = psycopg2.connect(
             dbname=config['dbname'],
             user=config['user'],
@@ -31,6 +32,7 @@ def migrate():
         print("Database migration completed successfully.")
     except Exception as e:
         print(f"Migration failed: {e}")
+
 
 if __name__ == '__main__':
     migrate()
