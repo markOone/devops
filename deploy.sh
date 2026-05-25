@@ -8,7 +8,7 @@ fi
 echo "Починаємо розгортання..."
 
 apt-get update
-apt-get install -y postgresql postgresql-contrib python3 python3-dev python3-venv python3-pip nginx git curl libpq-dev build-essential
+apt-get install -y postgresql postgresql-contrib python3 python3-dev python3-venv python3-pip nginx git curl libpq-dev build-essential python3-psycopg2
 
 useradd -m -s /bin/bash -G sudo student 2>/dev/null || echo "Користувач student вже існує"
 echo "student:studentpass" | chpasswd
@@ -44,10 +44,10 @@ EOF
 chown -R app:app /etc/mywebapp
 
 APP_DIR="/opt/mywebapp"
-rm -rf $APP_DIR  
+rm -rf $APP_DIR
 git clone https://github.com/markOone/devops $APP_DIR
 
-python3 -m venv $APP_DIR/venv
+python3 -m venv --system-site-packages $APP_DIR/venv
 $APP_DIR/venv/bin/pip install -r $APP_DIR/requirements.txt
 chown -R app:app $APP_DIR
 
