@@ -1,0 +1,6 @@
+{
+  "dbname": "taskdb",
+  "user": "appuser",
+  "password": "apppass",
+  "host": "db"
+}
