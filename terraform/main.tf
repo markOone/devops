@@ -41,6 +41,7 @@ resource "libvirt_domain" "worker" {
   name   = "worker"
   memory = "1024"
   vcpu   = 1
+  type   = "qemu" # <--- ОСЬ ЦЕЙ РЯДОК
   network_interface {
     network_name   = "default"
     wait_for_lease = true
@@ -55,6 +56,7 @@ resource "libvirt_domain" "db" {
   name   = "db"
   memory = "1024"
   vcpu   = 1
+  type   = "qemu" # <--- І ОСЬ ТУТ ТАКОЖ
   network_interface {
     network_name   = "default"
     wait_for_lease = true
