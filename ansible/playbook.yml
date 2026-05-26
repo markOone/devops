@@ -1,0 +1,53 @@
+---
+- name: Configure Database Server
+  hosts: db
+  become: yes
+  tasks:
+    - name: Install PostgreSQL
+      apt:
+        name: postgresql
+        state: present
+        update_cache: yes
+    
+    - name: Create required users
+      user:
+        name: "{{ item }}"
+        state: present
+        shell: /bin/bash
+      loop:
+        - teacher
+        - operator
+
+    - name: Setup sudo rights for operator (restart postgresql only)
+      lineinfile:
+        path: /etc/sudoers.d/operator
+        line: 'operator ALL=(ALL) NOPASSWD: /usr/bin/systemctl restart postgresql'
+        create: yes
+        mode: '0440'
+
+- name: Configure Worker Server
+  hosts: worker
+  become: yes
+  tasks:
+    - name: Install Nginx
+      apt:
+        name: nginx
+        state: present
+        update_cache: yes
+
+    - name: Create required users
+      user:
+        name: "{{ item }}"
+        state: present
+        shell: /bin/bash
+      loop:
+        - teacher
+        - operator
+        - app
+
+    - name: Setup sudo rights for operator (restart nginx only)
+      lineinfile:
+        path: /etc/sudoers.d/operator
+        line: 'operator ALL=(ALL) NOPASSWD: /usr/bin/systemctl restart nginx'
+        create: yes
+        mode: '0440'
